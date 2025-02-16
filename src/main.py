@@ -1,7 +1,13 @@
 from textnode import *
+from htmlnode import *
 
 def main():
-    testobj =TextNode("This is a text node", TextType.BOLD, "https://www.boot.dev")
-    print(testobj)
+    props = {
+    "href": "https://www.google.com",
+    "target": "_blank",
+}
+    testobj = HTMLNode(None,None,None,props)
+    print(testobj.props_to_html())
+    print(props)
 
 main()
