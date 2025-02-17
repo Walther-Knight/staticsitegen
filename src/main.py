@@ -6,8 +6,9 @@ def main():
     "href": "https://www.google.com",
     "target": "_blank",
 }
-    testobj = HTMLNode(None,None,None,props)
-    print(testobj.props_to_html())
-    print(props)
+    tag = "p"
+    value = "Test Value!"
+    testobj = LeafNode(tag, value, None, props)
+    print(testobj.to_html())
 
 main()
