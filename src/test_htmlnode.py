@@ -68,7 +68,6 @@ class TestHTMLNode(unittest.TestCase):
         node = LeafNode(
             "p",
             "Test Value!",
-            None,
             None
     )
         self.assertEqual(
@@ -76,27 +75,25 @@ class TestHTMLNode(unittest.TestCase):
     )
         
     def test_children_not_none(self):
-        node = LeafNode(
+        with self.assertRaises(TypeError):
+            LeafNode(
             "p",
             "Test Value!",
             "Children!",
             None
     )
-        self.assertEqual(
-            node.children, None
-    )
 
     def test_value_required(self):
-        LeafNode(
-            "p",
-            None, {
-        "href": "https://www.google.com",
-        "target": "_blank",
-    }
-    )
-        self.assertRaises(
-            ValueError
-    )
+        with self.assertRaises(ValueError):
+            LeafNode(
+                "p",
+                None,
+                None,
+                {
+                    "href": "https://www.google.com",
+                    "target": "_blank"
+                    }
+                    )
 
 
 if __name__ == "__main__":

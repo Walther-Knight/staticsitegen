@@ -8,7 +8,7 @@ def main():
 }
     tag = "p"
     value = "Test Value!"
-    testobj = LeafNode(tag, value, None, props)
+    testobj = LeafNode(tag, value, props)
     print(testobj.to_html())
 
 main()
