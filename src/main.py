@@ -2,22 +2,9 @@ from textnode import *
 from htmlnode import *
 
 def main():
-    node = ParentNode(
-                "p",
-                None,
-                [
-                    ParentNode("PARENT",
-                    None,
-                    [
-                        LeafNode(None, "Normal text")
-                    ],
-                    None
-                )
-            ],
-            None
-        )
+    node = TextNode("Text Content", TextType.ITALIC)
 
 
-    print(node.to_html())
+    print(node)
 
 main()

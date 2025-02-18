@@ -10,20 +10,20 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(node, node2)
 
     def test_all_type(self):
-        node = TextNode("This is a text node", TextType.NORMAL)
+        node = TextNode("This is a text node", TextType.TEXT)
         node2 = TextNode("This is a bold node", TextType.BOLD)
         node3 = TextNode("This is an italic node", TextType.ITALIC)
         node4 = TextNode("This is a code node", TextType.CODE)
-        node5 = TextNode("This is a links node", TextType.LINKS)
-        node6 = TextNode("This is an images node", TextType.IMAGES)
+        node5 = TextNode("This is a links node", TextType.LINK)
+        node6 = TextNode("This is an images node", TextType.IMAGE)
         #test not equivalent
         self.assertNotEqual(node, node2)
         self.assertNotEqual(node3, node4)
         self.assertNotEqual(node5, node6)
     
     def test_eq_2(self):
-        node = TextNode("This is a text node", TextType.LINKS)
-        node2 = TextNode("This is a text node", TextType.LINKS)
+        node = TextNode("This is a text node", TextType.LINK)
+        node2 = TextNode("This is a text node", TextType.LINK)
         self.assertEqual(node, node2)
 
     def test_non_eq(self):
