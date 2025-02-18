@@ -1,6 +1,6 @@
 import unittest
 
-from htmlnode import HTMLNode, LeafNode
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 class TestHTMLNode(unittest.TestCase):
 #HTMLNode test cases
@@ -47,7 +47,7 @@ class TestHTMLNode(unittest.TestCase):
         )
         self.assertEqual(
             node.__repr__(),
-            "HTMLNode(p, What a strange world, children: None, {'class': 'primary'})",
+            "HTMLNode(Tag: p, Value: What a strange world, children: None, Props: {'class': 'primary'})",
         )
 #LeafNode test cases
     def test_props_value(self):
@@ -92,9 +92,84 @@ class TestHTMLNode(unittest.TestCase):
                 {
                     "href": "https://www.google.com",
                     "target": "_blank"
-                    }
-                    )
+                }
+            )
+#ParentNode test cases
+    def test_html_out(self):
+        node = ParentNode(
+            "p",
+            None,
+            [
+                LeafNode("b", "Bold text"),
+                LeafNode(None, "Normal text"),
+                LeafNode("i", "italic text"),
+                LeafNode(None, "Normal text"),
+            ],
+            None
+        )
 
+    
+        self.assertEqual(
+            node.to_html(), "<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>"
+        )
+
+    def test_nested_parent(self):
+            node = ParentNode(
+                "p",
+                None,
+                [
+                    ParentNode("PARENT",
+                    None,
+                    [
+                        LeafNode(None, "Normal text")
+                    ],
+                    None
+                )
+            ],
+            None
+        )
+            self.assertEqual(node.to_html(), '<p><PARENT>Normal text</PARENT></p>')
+
+    def test_no_tag(self):
+        with self.assertRaises(ValueError):
+            ParentNode(
+                None,
+                None,
+                [
+                    LeafNode("b", "Bold text"),
+                    LeafNode(None, "Normal text"),
+                    LeafNode("i", "italic text"),
+                    LeafNode(None, "Normal text"),
+                ],
+                None
+        )
+    def test_no_value(self):
+        with self.assertRaises(ValueError):
+            ParentNode(
+                "p",
+                None,
+                None,
+                None
+        )
+
+    def test_html_out_with_props(self):
+        node = ParentNode(
+            "p",
+            None,
+            [
+                LeafNode("b", "Bold text"),
+                LeafNode(None, "Normal text"),
+                LeafNode("i", "italic text"),
+                LeafNode(None, "Normal text"),
+            ],
+            {
+        "href": "https://www.google.com",
+        "target": "_blank",
+    }
+        )
+        self.assertEqual(
+            node.to_html(), '<p href="https://www.google.com" target="_blank"><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>'
+        )
 
 if __name__ == "__main__":
     unittest.main()

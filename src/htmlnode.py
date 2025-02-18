@@ -22,7 +22,7 @@ class HTMLNode:
         return self.tag == other.tag and self.value == other.value and self.children == other.children and self.props == other.props
 
     def __repr__(self):
-        return f"HTMLNode({self.tag}, {self.value}, children: {self.children}, {self.props})"
+        return f"HTMLNode(Tag: {self.tag}, Value: {self.value}, children: {self.children}, Props: {self.props})"
     
 class LeafNode(HTMLNode):
     def __init__(self, tag, value, children=None, props=None):
@@ -40,4 +40,25 @@ class LeafNode(HTMLNode):
         return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
     
     def __repr__(self):
-        return f"LeafNode({self.tag}, {self.value}, {self.props})"
+        return f"LeafNode(Tag: {self.tag}, Value: {self.value}, Props: {self.props})"
+
+class ParentNode(HTMLNode):
+    def __init__(self, tag, value, children, props=None):
+        if value is not None:
+            raise TypeError("ParentNode cannot have HTML value assigned")
+        if children == None:
+            raise ValueError("ParentNode must have children")
+        if tag == None:
+            raise ValueError("HTML Tag required for ParentNode")
+        super().__init__(tag, None, children, props)
+
+    def to_html(self):
+        html_string = ""
+        for child in self.children:
+                html_string += child.to_html()
+        if self.props == None:
+            return f"<{self.tag}>{html_string}</{self.tag}>"
+        return f"<{self.tag}{self.props_to_html()}>{html_string}</{self.tag}>"
+    
+    def __repr__(self):
+        return f"ParentNode(Tag: {self.tag}, Children: {self.children}, Props: {self.props})"
