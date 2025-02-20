@@ -4,11 +4,13 @@ from textnode import *
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
     for node in old_nodes:
+        print(node)
         if node.text_type is not TextType.TEXT:
             new_nodes.append(node)
             continue
 
         text = node.text
+    #continue loop as long as there is text remaining
         while True:
             delimit_start = text.find(delimiter)
             if delimit_start == -1:
